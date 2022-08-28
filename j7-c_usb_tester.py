@@ -5,6 +5,8 @@ import contextlib
 import binascii
 import struct
 import sys
+import argparse
+import csv
 
 def parse_data(data_pkt):
     if not data_pkt or len(data_pkt) != 36:
@@ -29,13 +31,41 @@ def parse_data(data_pkt):
 
 def read_data(port):
     with contextlib.closing(serial.Serial(port, timeout=3)) as s:
-        for i in range(10):
+        while True:
             if data := s.read(36):
                 if parsed := parse_data(data):
-                    print(binascii.hexlify(data), parsed)
+                    yield (data, parsed)
 
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--csv', help='csv output filename')
+    parser.add_argument('device_port', help='Linux bluetooth rfcomm device path or Windows COM port')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    if args.device_port:
+        csv_file = None
+        csv_writer = None
+        try:
+            for data, parsed_data in read_data(args.device_port):
+                if not csv_writer and args.csv:
+                    csv_file = open(args.csv, 'w', newline='')
+                    csv_writer = csv.DictWriter(csv_file, fieldnames=parsed_data.keys())
+                    csv_writer.writeheader()
+
+                if csv_writer:
+                    csv_writer.writerow(parsed_data)
+
+                print(binascii.hexlify(data).decode('utf-8'), parsed_data)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            if csv_file:
+                csv_file.close()
 
 
 if __name__ == '__main__':
-    if len(sys.argv) >= 2:
-        read_data(sys.argv[1])
+    main()
