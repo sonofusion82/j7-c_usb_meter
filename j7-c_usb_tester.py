@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 import serial
 import datetime
 import contextlib
 import binascii
 import struct
+import sys
 
 def parse_data(data_pkt):
     if not data_pkt or len(data_pkt) != 36:
@@ -34,5 +36,6 @@ def read_data(port):
 
 
 
-
-read_data('/dev/rfcomm0')
+if __name__ == '__main__':
+    if len(sys.argv) >= 2:
+        read_data(sys.argv[1])
