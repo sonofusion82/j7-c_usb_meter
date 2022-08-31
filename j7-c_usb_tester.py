@@ -7,6 +7,7 @@ import struct
 import sys
 import argparse
 import csv
+import time
 
 def parse_data(data_pkt):
     if not data_pkt or len(data_pkt) != 36:
@@ -30,11 +31,24 @@ def parse_data(data_pkt):
 
 
 def read_data(port):
-    with contextlib.closing(serial.Serial(port, timeout=3)) as s:
-        while True:
-            if data := s.read(36):
-                if parsed := parse_data(data):
-                    yield (data, parsed)
+    s = None
+    while True:
+        try:
+            s = serial.Serial(port, timeout=3)
+            while True:
+                data = s.read(36)
+                if data:
+                    parsed = parse_data(data)
+                    if parsed:
+                        yield (data, parsed)
+        except serial.serialutil.SerialException as ex:
+            print("Serial Exception:", ex)
+            time.sleep(3)
+        except KeyboardInterrupt:
+            break
+        finally:
+            if s:
+                s.close()
 
 
 def parse_args():
