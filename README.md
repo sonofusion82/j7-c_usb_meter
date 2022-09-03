@@ -13,7 +13,11 @@ But I'm a little squirmish about side-loading application from a dubious [mediaf
 
 Luckily, I've found some discussion regarding the Bluetooth protocol on Arduino forum [USB Digital Tester (BT) Protocol](https://forum.arduino.cc/t/usb-digital-tester-bt-protocol/943891)
 
-After a little experiment and reverse engineering, I've found that my device seems to output the data in a slightly different format. Once we open the Bluetooth serial port, it will send a 36-byte packet every 1 second with the following format:
+After a little experiment and reverse engineering, I've found that my device seems to output the data in a slightly different format. Once we open the Bluetooth serial port, it will send a 36-byte packet every 1 second. Example packet received:
+
+    ff 55 01 3 00 01 f4 00 0 34 00 0f fa 00 0 8 52 00 09 00 0a 00 20 00 03 2c 18 3c 0c 80 00 00 03 20 00 9e
+
+Comparing the the info from the Arduino forum, it seems the packet format is still mostly similar but slightly offset as below:
 
 | **Offset** | **Data Byte** | **Multibyte hex** | **Value** | **Data Type**             |
 | ---------- | ------------- | ----------------- | --------- | ------------------------- |
@@ -68,6 +72,8 @@ Here's the steps:
 
 ## Example data
 
-Below is the charging curve for my OnePlus phone's SuperVOOC charging:
+I've recorded the measurements when charging my OnePlus phone with the 65W SuperVOOC charger in [supervooc_2022-09-03_131744.csv](supervooc_2022-09-03_131744.csv).
+
+Using LibreOffice to open the CSV file, I've plotted the charging curve as below:
 
 ![SuperVOOC charging curve](supervooc-charging-curve.png)
