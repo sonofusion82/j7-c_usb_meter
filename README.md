@@ -87,7 +87,25 @@ Using LibreOffice to open the CSV file, I've plotted the charging curve as below
 
 With `--web=<port>`option, it will create a nicer web dashboard interface, but will require python [bottle](https://bottlepy.org/) framework.
 For example:
+```
+python3 j7-c_usb_tester.py --relative --web=8080 <bluetooth_port>
+```
 
-    python3 j7-c_usb_tester.py --relative --web=8080 <bluetooth_port>
+**Note:** On Linux with Bluetooth MAC addresses, UV's managed Python doesn't support `socket.AF_BLUETOOTH`. Use your system's Python installation instead.
+
+```shell
+$ uv sync --no-managed-python
+Using CPython 3.12.3 interpreter at: /usr/bin/python3
+Removed virtual environment at: .venv
+Creating virtual environment at: .venv
+Resolved 3 packages in 7ms
+Prepared 2 packages in 158ms
+Installed 2 packages in 5ms
+ + bottle==0.13.4
+ + pyserial==3.5
+
+$ uv run ./j7-c_usb_tester.py --relative --web=8080 D6:E6:53:AA:BB:CC
+Web dashboard: http://localhost:8888/
+```
 
 ![Web Dashboard Screenshot](web_interface_screenshot.png)
