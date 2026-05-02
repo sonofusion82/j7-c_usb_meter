@@ -66,7 +66,11 @@ So, I've written a simple python script to read the data and save it as CSV file
 Here's the steps:
 
 1. Connect to the bluetooth serial port.
-2. Run `python3 j7-c_usb_tester.py --csv out.csv /dev/rfcomm0` for Linux or replace `/dev/rfcomm0` with COM port on Windows.
+2. Run `python3 j7-c_usb_tester.py --csv out.csv <bluetooth_port>`
+    * for Linux:
+        * `/dev/rfcomm0` for legacy Linux bluetooth rfcomm device
+        * bluetooth MAC address for example: `D6:E6:53:AA:BB:CC`
+    * COM port on Windows.
 3. Press Ctrl-C to exit after you are done logging the data.
 
 
