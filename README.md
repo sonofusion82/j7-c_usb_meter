@@ -81,3 +81,13 @@ I've recorded the measurements when charging my OnePlus phone with the 65W Super
 Using LibreOffice to open the CSV file, I've plotted the charging curve as below:
 
 ![SuperVOOC charging curve](supervooc-charging-curve.png)
+
+
+## Web Interface
+
+With `--web=<port>`option, it will create a nicer web dashboard interface, but will require python [bottle](https://bottlepy.org/) framework.
+For example:
+
+    python3 j7-c_usb_tester.py --relative --web=8080 <bluetooth_port>
+
+![Web Dashboard Screenshot](web_interface_screenshot.png)

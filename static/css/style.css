@@ -1,0 +1,83 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 1.5rem;
+}
+
+h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    color: #f8fafc;
+}
+
+/* --- Metrics grid --- */
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.metric {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 0.875rem 0.75rem;
+    text-align: center;
+    border: 1px solid #334155;
+}
+
+.metric .label {
+    display: block;
+    font-size: 0.65rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.25rem;
+}
+
+.metric .value {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+}
+
+.metric .value.voltage { color: #3b82f6; }
+.metric .value.current { color: #ef4444; }
+.metric .value.power   { color: #f59e0b; }
+.metric .value.energy  { color: #22c55e; }
+.metric .value.duration { font-size: 1.1rem; }
+
+.metric .unit {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+/* --- Chart --- */
+
+.chart-wrap {
+    background: #1e293b;
+    border-radius: 10px;
+    padding: 1.25rem;
+    border: 1px solid #334155;
+}
+
+#status {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+}
+
+canvas {
+    max-height: 460px;
+}
